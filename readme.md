@@ -11,10 +11,10 @@
 
 <p align="center">
     <a href='https://spring.io/projects/spring-boot'>
-        <img alt="springboot-version" src="https://img.shields.io/badge/SpringBoot-2.0.8.RELEASE-orange">
+        <img alt="springboot-version" src="https://img.shields.io/badge/SpringBoot-2.2.9.RELEASE-orange">
     </a>
     <a href='http://www.quartz-scheduler.org/'>
-        <img alt="Quartz-version" src="https://img.shields.io/badge/Quartz-2.3.0-blue">
+        <img alt="Quartz-version" src="https://img.shields.io/badge/Quartz-2.3.2-blue">
     </a>
     <a href='http://druid.apache.org/'>
         <img alt="druid-spring-boot" src="https://img.shields.io/badge/Druid-1.1.10-green">
@@ -149,6 +149,8 @@
 │                  │      MvcConfig.java
 │                  │      MyBatisPlusConfig.java
 │                  │      OrikaConfig.java
+│                  │      RedisConfig.java
+│                  │      RedisHttpSessionConfig.java
 │                  │      QuartzConfig.java  -- Quartz任务配置
 │                  │
 │                  ├─exception
@@ -176,7 +178,6 @@
     │      自定义任务和任务日志表.sql
     │
     ├─static
-    │  ├─css
     │  └─js
     │          jsencrypt.min.js
     │          md5.js
