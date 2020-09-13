@@ -5,11 +5,11 @@ server:
 spring:
   # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 数据源 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ #
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     #        password: Q0eJGTbRlTvTnjRFj76Vkbdo9H4PmEtC4DVBHHISQl2Y4+CC5Ohg3NTQ/Ah+c/FDe1jjqzx02DoAnXFyrokEDA==
     password: 111111
-    url: jdbc:mysql://localhost:3306/quartz?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/quartz?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&autoReconnect=true&serverTimezone=UTC&rewriteBatchedStatements=true
     username: root
     # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Druid 连接池配置 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ #
     ## Druid连接池配置，配置参考：https://blog.csdn.net/weixin_38187317/article/details/81562571
@@ -101,7 +101,7 @@ spring:
             # 数据库中表的前缀
             tablePrefix: qrtz_
             # 是否集群
-            isClustered: false
+            isClustered: true
             clusterCheckinInterval: 10000
             useProperties: false
             # 数据源命名
@@ -121,6 +121,45 @@ spring:
       #初始化表结构
       #jdbc:
     #initialize-schema: never
+
+  # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ redis基础配置  look -> SpringBoot2.0默认使用Redis连接池的配置注意事项：https://blog.csdn.net/ankeway/article/details/86544475 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ #
+  # Redis 集群搭建 look -> Redis集群模式搭建与原理详解：https://juejin.im/post/5b8fc5536fb9a05d2d01fb11
+  redis:
+    # 集群配置，暂时注释掉，以后有用到解开注释即可
+    #        cluster:
+    #          nodes:
+    #            - 127.0.0.1:7001
+    #            - 127.0.0.1:7002
+    #            - 127.0.0.1:7003
+    #            - 127.0.0.1:7004
+    #            - 127.0.0.1:7005
+    #            - 127.0.0.1:7006
+    # 获取失败 最大重定向次数
+    #          max-redirects: 3
+
+    # Redis数据库索引（默认为0）
+    database: 1
+    # Redis服务器地址，使用集群请注释掉
+    host: 127.0.0.1
+    # Redis服务器地址，使用集群请注释掉
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 111111
+    # 连接超时时间（毫秒）
+    timeout: 3000000s
+    lettuce:
+      # 关闭超时时间
+      shutdown-timeout: 100s
+      ## redis线程池设置
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 1000000s
+        # 连接池中的最小空闲连接
+        min-idle: 1
 
   # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 邮件 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ #
   mail:
