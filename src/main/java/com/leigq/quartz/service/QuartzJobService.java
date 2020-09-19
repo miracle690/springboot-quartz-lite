@@ -37,7 +37,7 @@ public class QuartzJobService {
      */
     public void addJob(AddQuartzJobDTO addQuartzJobDTO) throws SchedulerException {
         //是否允许并发执行
-        Class<? extends Job> jobClass = addQuartzJobDTO.getConcurrent() ? BaseJob.class : BaseJobDisallowConcurrent.class;
+        Class<? extends Job> jobClass = Boolean.TRUE.equals(addQuartzJobDTO.getConcurrent()) ? BaseJob.class : BaseJobDisallowConcurrent.class;
 
         final String taskName = addQuartzJobDTO.getTaskName();
         final String taskGroup = addQuartzJobDTO.getTaskGroup();
