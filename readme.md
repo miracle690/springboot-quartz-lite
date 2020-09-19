@@ -220,23 +220,9 @@
     3. 如果你的项目是用的SpringCloud，那你可以自己把此项目改成Cloud版本，执行任务就得去用 Feign 调用其他服务的接口了。
     3. 后面会考虑将此项目做成一个Starter。。。
 
-## 其它资料
+## 演示地址
 
-### 入门教程
+<http://quartz-lite.leiguoqing.xyz/>
 
-- [Quartz 入门详解](http://www.importnew.com/22890.html)
-- [Quartz使用总结](https://www.cnblogs.com/drift-ice/p/3817269.html)
-
-### 参考
-
-- [Spring Boot集成持久化Quartz定时任务管理和界面展示](https://www.cnblogs.com/dekevin/p/8716596.html)
-- [guns-lite](https://gitee.com/enilu/guns-lite)
-
-### 源码
-
- - 码云：<https://gitee.com/leiguoqing/springboot-quartz-lite>
- - Github：<https://github.com/MRLEILOVE/springboot-quartz-lite.git>
-
-### 其它
-
- - [Quartz集群原理及配置应用](https://www.cnblogs.com/zhenyuyaodidiao/p/4755649.html)
+- 账号：admin
+- 密码：123456
