@@ -114,6 +114,9 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
             addQuartzJobDTO.transExecParams(updateSysTaskVO.getExecParams());
             addQuartzJobDTO.setTaskId(sysTask.getId());
             quartzJobService.addJob(addQuartzJobDTO);
+
+            // 修改任务后手动执行
+            this.pauseTask(addQuartzJobDTO.getTaskName(), addQuartzJobDTO.getTaskGroup());
         } catch (SchedulerException e) {
             throw new ServiceException("更新任务失败", e);
         }
@@ -185,7 +188,7 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
      */
     public void deleteTask(String taskName, String taskGroup) {
         try {
-            final SysTask sysTask = getSysTask(taskName, taskGroup);
+            final SysTask sysTask = this.getSysTask(taskName, taskGroup);
             ValidUtils.isNull(sysTask, "查询不到此任务！");
             // 删除自定义任务表
             this.removeById(sysTask.getId());
