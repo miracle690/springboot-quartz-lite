@@ -193,20 +193,25 @@ public class SysTaskController {
 	 * @param taskClass 执行类名
 	 */
 	private void checkTaskClassName(String taskClass) {
+		Class<?> clazz = null;
 		try {
 			// 获取自定义任务的类
-			Class<?> clazz = Class.forName(taskClass);
-			if (BaseTaskExecute.class.getSimpleName().equals(clazz.getSimpleName())) {
-				ValidUtils.throwException(String.format("执行类不可配置为%s！", BaseTaskExecute.class.getSimpleName()));
-			}
-			// 获取自定义任务实例，自定义任务全部继承 BaseTaskExecute
-			BaseTaskExecute baseTaskExecute = (BaseTaskExecute) SpringContextHolder.getBean(clazz);
+			clazz = Class.forName(taskClass);
 		} catch (ClassNotFoundException e) {
 			ValidUtils.throwException("找不到执行类，请检查执行类是否配置正确！");
+		}
+		if (BaseTaskExecute.class.getName().equals(taskClass)) {
+			ValidUtils.throwException(String.format("执行类不可配置为%s！", BaseTaskExecute.class.getSimpleName()));
+		}
+		try {
+			// 获取自定义任务实例，自定义任务全部继承 BaseTaskExecute
+			final Object bean = SpringContextHolder.getBean(clazz);
+			if (!(bean instanceof BaseTaskExecute)) {
+				ValidUtils.throwException(String.format("请确保执行类继承%s类！", BaseTaskExecute.class.getSimpleName()));
+			}
 		} catch (NoSuchBeanDefinitionException e) {
 			ValidUtils.throwException("找不到执行类，请检查执行类是否配置@Component注解！");
-		} catch (ClassCastException e) {
-			ValidUtils.throwException(String.format("请确保执行类继承%s类！", BaseTaskExecute.class.getSimpleName()));
 		}
 	}
+
 }
