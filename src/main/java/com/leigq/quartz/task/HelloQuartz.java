@@ -33,12 +33,15 @@ public class HelloQuartz extends BaseTaskExecute implements Serializable {
      * @param dataMap the data map
      */
     @Override
-    public void execute(Map<String, Object> dataMap) {
+    public void execute(Map<String, Object> dataMap) throws InterruptedException {
         // */2 * * * * ?
         log.warn(">>>>>>>>>Hello Quartz1 start!");
         // 测试依赖注入
         log.warn("quartzJobService = {}", quartzJobService);
         // 测试获取任务参数
         log.warn("参数aaa的值 = [{}]", dataMap.get("aaa") + "");
+
+        // 模拟耗时
+        Thread.sleep(10 * 1000);
     }
 }
