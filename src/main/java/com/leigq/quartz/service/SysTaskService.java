@@ -206,7 +206,7 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
      * @return the sys task
      */
     public SysTask getSysTask(String taskName, String taskGroup) {
-        return this.getOne(Wrappers.<SysTask>lambdaUpdate()
+        return this.getOne(Wrappers.<SysTask>lambdaQuery()
                 .eq(SysTask::getTaskName, taskName)
                 .eq(SysTask::getTaskGroup, taskGroup)
         );
