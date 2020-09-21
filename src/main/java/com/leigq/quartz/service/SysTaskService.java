@@ -35,10 +35,12 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
      */
     private final QuartzJobService quartzJobService;
     private final SysTaskMapper sysTaskMapper;
+    private final SysTaskLogService sysTaskLogService;
 
-    public SysTaskService(QuartzJobService quartzJobService, SysTaskMapper sysTaskMapper) {
+    public SysTaskService(QuartzJobService quartzJobService, SysTaskMapper sysTaskMapper, SysTaskLogService sysTaskLogService) {
         this.quartzJobService = quartzJobService;
         this.sysTaskMapper = sysTaskMapper;
+        this.sysTaskLogService = sysTaskLogService;
     }
 
     /**
@@ -193,6 +195,8 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
             // 删除自定义任务表
             this.removeById(sysTask.getId());
             quartzJobService.deleteJob(taskName, taskGroup);
+            // 删除对应任务的执行日志
+            sysTaskLogService.deleteByTaskId(sysTask.getId());
         } catch (SchedulerException e) {
             throw new ServiceException("删除任务失败", e);
         }

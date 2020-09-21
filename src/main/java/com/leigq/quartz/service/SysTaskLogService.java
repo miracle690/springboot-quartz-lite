@@ -108,4 +108,17 @@ public class SysTaskLogService extends ServiceImpl<SysTaskLogMapper, SysTaskLog>
         );
     }
 
+
+    /**
+     * Delete by task id boolean.
+     *
+     * @param taskId the task id
+     * @return the boolean
+     */
+    public boolean deleteByTaskId(Long taskId) {
+        return this.remove(Wrappers.<SysTaskLog>lambdaUpdate()
+            .eq(SysTaskLog::getTaskId, taskId)
+        );
+    }
+
 }
