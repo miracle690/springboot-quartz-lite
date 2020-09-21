@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.leigq.quartz.bean.dto.TaskExecuteDTO;
 import com.leigq.quartz.service.SysTaskLogService;
 import com.leigq.quartz.service.SysTaskService;
+import com.leigq.quartz.util.DateUtils;
 import com.leigq.quartz.util.EmailSender;
 import com.leigq.quartz.util.ExceptionDetailUtils;
 import com.leigq.quartz.util.ThreadPoolUtils;
@@ -70,8 +71,17 @@ public abstract class BaseTaskExecute {
         try {
             // 获取任务携带的参数
             Map<String, Object> dataMap = taskExecuteDTO.getDataMap();
+
+            final long startTime = System.currentTimeMillis();
             // 调用子类的任务
             this.execute(dataMap);
+            final long endTime = System.currentTimeMillis();
+
+            // 记录任务执行耗时
+            String format = "任务执行成功：开始时间：[%s]，结束时间：[%s]，共耗时：[%s]";
+            String sTime = DateUtils.String.from(startTime);
+            String eTime = DateUtils.String.from(endTime);
+            sysTaskLogService.updateExecResultText(logId, String.format(format, sTime, eTime, DateUtils.Format.formatDuring(endTime - startTime)));
         } catch (Exception e) {
             this.log.error(String.format("任务：[ %s ] 执行异常：", taskExecuteDTO.getTaskName()), e);
 
@@ -119,5 +129,4 @@ public abstract class BaseTaskExecute {
             log.warn("没事务不回滚");
         }
     }
-
 }

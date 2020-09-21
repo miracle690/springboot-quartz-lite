@@ -78,6 +78,21 @@ public class SysTaskLogService extends ServiceImpl<SysTaskLogMapper, SysTaskLog>
         return sysTaskLog.getId();
     }
 
+
+    /**
+     * Update 成功信息或抛出的异常信息.
+     *
+     * @param logId          the log id
+     * @param execResultText the exec result text
+     * @return the boolean
+     */
+    public boolean updateExecResultText(Long logId, String execResultText) {
+        return this.update(Wrappers.<SysTaskLog>lambdaUpdate()
+                .set(SysTaskLog::getExecResultText, execResultText)
+                .eq(SysTaskLog::getId, logId)
+        );
+    }
+
     /**
      * 将执行结果改为失败并记录异常信息
      *
