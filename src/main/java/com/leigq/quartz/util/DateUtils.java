@@ -1,10 +1,7 @@
 package com.leigq.quartz.util;
 
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -183,17 +180,17 @@ public class DateUtils {
             return from(epochSecond, Format.DATE_TIME_FORMAT);
         }
 
-        /**
-         * 时间戳转 String 类型时间，自定义格式
-         *
-         * @param epochSecond the epoch second
-         * @param format      the format
-         * @return the java . lang . string
-         */
-        public static java.lang.String from(long epochSecond, java.lang.String format) {
-            final java.time.LocalDateTime localDateTime = LocalDateTime.from(epochSecond);
-            return from(localDateTime, format);
-        }
+		/**
+		 * 时间戳转 String 类型时间，自定义格式
+		 *
+		 * @param timestamp the epoch second
+		 * @param format    the format
+		 * @return the java . lang . string
+		 */
+		public static java.lang.String from(long timestamp, java.lang.String format) {
+			final java.time.LocalDateTime localDateTime = LocalDateTime.from(timestamp);
+			return from(localDateTime, format);
+		}
     }
 
 
@@ -365,11 +362,11 @@ public class DateUtils {
         /**
          * 时间戳 转 LocalDateTime 类型时间，自定义格式
          *
-         * @param epochSecond the epoch second
+         * @param timestamp the timestamp
          * @return the java . lang . string
          */
-        public static java.time.LocalDateTime from(long epochSecond) {
-            return java.time.LocalDateTime.ofEpochSecond(epochSecond, 0, ZoneOffset.ofHours(8));
+        public static java.time.LocalDateTime from(long timestamp) {
+            return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
         }
     }
 
