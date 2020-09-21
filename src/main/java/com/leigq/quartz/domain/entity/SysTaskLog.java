@@ -46,7 +46,7 @@ public class SysTaskLog implements Serializable {
     private Integer execResult;
 
     /**
-     * 抛出的异常信息
+     * 成功信息或抛出的异常信息
      */
     @TableField(value = "exec_result_text")
     private String execResultText;
