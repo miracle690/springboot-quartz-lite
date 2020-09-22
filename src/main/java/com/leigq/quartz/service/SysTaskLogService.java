@@ -59,35 +59,28 @@ public class SysTaskLogService extends ServiceImpl<SysTaskLogMapper, SysTaskLog>
 
 
     /**
-     * 添加一条任务执行成功日志
+     * 添加一条任务执行日志
      *
-     * @param taskName the task name
-     * @param taskId   the task id
-     * @return 日志ID
+     * @param sysTaskLog the sys task log
+     * @return 日志ID long
      */
-    public Long addSuccessLog(String taskName, Long taskId) {
+    public Long addLog(SysTaskLog sysTaskLog) {
         // 添加任务执行日志
-        SysTaskLog sysTaskLog = SysTaskLog.builder()
-                .taskName(taskName)
-                .execDate(new Date())
-                .execResult(SysTaskExecResultEnum.SUCCESS.getValue())
-                .execResultText("任务执行成功")
-                .taskId(taskId)
-                .build();
         this.save(sysTaskLog);
         return sysTaskLog.getId();
     }
 
 
     /**
-     * Update 成功信息或抛出的异常信息.
+     * 修改任务执行结果、成功信息或抛出的异常信息.
      *
      * @param logId          the log id
      * @param execResultText the exec result text
      * @return the boolean
      */
-    public boolean updateExecResultText(Long logId, String execResultText) {
+    public boolean updateExecResultAndExecResultText(Long logId, SysTaskExecResultEnum sysTaskExecResultEnum, String execResultText) {
         return this.update(Wrappers.<SysTaskLog>lambdaUpdate()
+                .set(SysTaskLog::getExecResult, sysTaskExecResultEnum.getValue())
                 .set(SysTaskLog::getExecResultText, execResultText)
                 .eq(SysTaskLog::getId, logId)
         );

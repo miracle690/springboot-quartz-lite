@@ -226,35 +226,27 @@ public class SysTaskService extends ServiceImpl<SysTaskMapper, SysTask> {
 
 
     /**
-     * 将任务的最近一次执行结果更新为成功
-     *
-     * @param taskId the task id
-     * @return the boolean
+     * 修改任务的最近一次执行结果
+     * @param taskId     the task id
+     * @param resultEnum the result enum
+     * @return
      */
-    public boolean updateLatelyExecResultToSuccess(Long taskId) {
-        return this.updateLatelyExecResult(taskId, SysTaskExecResultEnum.SUCCESS);
-    }
-
-    /**
-     * 将任务的最近一次执行结果更新为失败
-     *
-     * @param taskId the task id
-     * @return the boolean
-     */
-    public boolean updateLatelyExecResultToFail(Long taskId) {
-        // 将任务最近一次执行结果改为失败
-        return this.updateLatelyExecResult(taskId, SysTaskExecResultEnum.FAILURE);
+    public boolean updateExecResult(Long taskId, SysTaskExecResultEnum resultEnum) {
+        return this.update(Wrappers.<SysTask>lambdaUpdate()
+                .set(SysTask::getExecResult, resultEnum.getValue())
+                .eq(SysTask::getId, taskId)
+        );
     }
 
 
     /**
-     * Update lately exec result boolean.
+     * 更新任务的最近一次执行时间、最近一次执行结果字段
      *
      * @param taskId     the task id
      * @param resultEnum the result enum
      * @return the boolean
      */
-    private boolean updateLatelyExecResult(Long taskId, SysTaskExecResultEnum resultEnum) {
+    public boolean updateExecDateAndExecResult(Long taskId, SysTaskExecResultEnum resultEnum) {
         return this.update(Wrappers.<SysTask>lambdaUpdate()
                 .set(SysTask::getExecDate, new Date())
                 .set(SysTask::getExecResult, resultEnum.getValue())
