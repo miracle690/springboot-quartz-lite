@@ -44,7 +44,7 @@
                     label="执行结果"
                     align="center">
                     <template slot-scope="scope">
-                        <div>{{scope.row.execResult === 1 ? '成功' : '失败'}}</div>
+                        <div>{{scope.row.execResult === -1 ? '执行中' : scope.row.execResult === 1 ? '成功' : '失败'}}</div>
                     </template>
             </el-table-column>
 

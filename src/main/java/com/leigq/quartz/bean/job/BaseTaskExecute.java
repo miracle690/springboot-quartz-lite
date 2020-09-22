@@ -2,6 +2,8 @@ package com.leigq.quartz.bean.job;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.leigq.quartz.bean.dto.TaskExecuteDTO;
+import com.leigq.quartz.bean.enumeration.SysTaskExecResultEnum;
+import com.leigq.quartz.domain.entity.SysTaskLog;
 import com.leigq.quartz.service.SysTaskLogService;
 import com.leigq.quartz.service.SysTaskService;
 import com.leigq.quartz.util.DateUtils;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,11 +65,18 @@ public abstract class BaseTaskExecute {
      * Execute.
      */
     public void execute() {
-        // 添加任务执行成功日志
-        final Long logId = sysTaskLogService.addSuccessLog(taskExecuteDTO.getTaskName(), taskExecuteDTO.getTaskId());
+        // 添加任务执行日志，默认执行中
+        SysTaskLog sysTaskLog = SysTaskLog.builder()
+                .taskName(taskExecuteDTO.getTaskName())
+                .execDate(new Date())
+                .execResult(SysTaskExecResultEnum.EXECUTING.getValue())
+                .execResultText("任务执行中....")
+                .taskId(taskExecuteDTO.getTaskId())
+                .build();
+        final Long logId = sysTaskLogService.addLog(sysTaskLog);
 
-        // 更新任务的最近一次执行时间、最近一次执行结果字段，默认先成功
-        sysTaskService.updateLatelyExecResultToSuccess(taskExecuteDTO.getTaskId());
+        // 更新任务的最近一次执行时间、最近一次执行结果字段，默认执行中
+        sysTaskService.updateExecDateAndExecResult(taskExecuteDTO.getTaskId(), SysTaskExecResultEnum.EXECUTING);
 
         try {
             // 获取任务携带的参数
@@ -77,11 +87,18 @@ public abstract class BaseTaskExecute {
             this.execute(dataMap);
             final long endTime = System.currentTimeMillis();
 
+
+            /* 任务执行成功后的操作 */
+            // 更新任务的最近一次执行结果为成功
+            sysTaskService.updateExecResult(taskExecuteDTO.getTaskId(), SysTaskExecResultEnum.SUCCESS);
+
             // 记录任务执行耗时
             String format = "任务执行成功：开始时间：[%s]，结束时间：[%s]，共耗时：[%s]";
             String sTime = DateUtils.String.from(startTime);
             String eTime = DateUtils.String.from(endTime);
-            sysTaskLogService.updateExecResultText(logId, String.format(format, sTime, eTime, DateUtils.Format.formatDuring(endTime - startTime)));
+            sysTaskLogService.updateExecResultAndExecResultText(logId, SysTaskExecResultEnum.SUCCESS,
+                    String.format(format, sTime, eTime, DateUtils.Format.formatDuring(endTime - startTime)));
+
         } catch (Exception e) {
             this.log.error(String.format("任务：[ %s ] 执行异常：", taskExecuteDTO.getTaskName()), e);
 
@@ -89,7 +106,7 @@ public abstract class BaseTaskExecute {
             sysTaskLogService.updateExecResultToFail(logId, e);
 
             // 将任务最近一次执行结果改为失败
-            sysTaskService.updateLatelyExecResultToFail(taskExecuteDTO.getTaskId());
+            sysTaskService.updateExecResult(taskExecuteDTO.getTaskId(), SysTaskExecResultEnum.FAILURE);
 
             // 发送邮件
             sendEmail(e);

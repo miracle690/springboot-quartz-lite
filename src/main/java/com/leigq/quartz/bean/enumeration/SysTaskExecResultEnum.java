@@ -20,6 +20,11 @@ public enum SysTaskExecResultEnum {
      */
     FAILURE(0),
 
+    /**
+     * 正在执行
+     */
+    EXECUTING(-1),
+
     ;
 
     private final Integer value;

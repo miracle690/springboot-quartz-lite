@@ -40,7 +40,7 @@ public class SysTaskLog implements Serializable {
     private Date execDate;
 
     /**
-     * 执行结果（成功:1、失败:0)
+     * 执行结果 (成功:1、失败:0、正在执行：-1)
      */
     @TableField(value = "exec_result")
     private Integer execResult;

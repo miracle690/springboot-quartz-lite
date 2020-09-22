@@ -360,7 +360,7 @@ public class DateUtils {
 
 
         /**
-         * 时间戳 转 LocalDateTime 类型时间，自定义格式
+         * 时间戳 转 LocalDateTime 类型时间
          *
          * @param timestamp the timestamp
          * @return the java . lang . string

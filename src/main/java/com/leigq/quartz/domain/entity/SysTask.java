@@ -72,7 +72,7 @@ public class SysTask implements Serializable {
     private Date execDate;
 
     /**
-     * 最近一次执行结果 （成功:1、失败:0)
+     * 最近一次执行结果 (成功:1、失败:0、正在执行：-1)
      */
     @TableField(value = "exec_result")
     private Integer execResult;
