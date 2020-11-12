@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+<a href='https://gitee.com/leiguoqing/quartz-lite-starter'>starter版本</a>已上线，欢迎使用！
+</p>
+
+<p align="center">
     <a href='https://spring.io/projects/spring-boot'>
         <img alt="springboot-version" src="https://img.shields.io/badge/SpringBoot-2.2.9.RELEASE-orange">
     </a>
@@ -218,7 +222,7 @@
     1. 把项目源码拉下来，将核心实现类，复制到已存在的系统中，根据自己的项目改改，就能用了。
     2. 按照上面说的步骤，将此项目作为一个单独的系统进行部署，将执行任务所需的Mapper，Service从已有系统复制进此项目，然后就可以编写任务相关代码了。这样做的好处是：当主系统停止运行，也不影响任务系统的运行。
     3. 如果你的项目是用的SpringCloud，那你可以自己把此项目改成Cloud版本，执行任务就得去用 Feign 调用其他服务的接口了。
-    3. 后面会考虑将此项目做成一个Starter。。。
+    4. 使用starter版本集成，详见：<https://gitee.com/leiguoqing/quartz-lite-starter>
 
 ## 演示地址
 
