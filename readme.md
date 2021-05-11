@@ -228,7 +228,7 @@
 
 ## 演示地址
 
-<https://mrlei.cn1.utools.club/quartz-lite/login.html>
+<https://quartz-lite.cn.utools.club>
 
 - 账号：admin
 - 密码：123456
