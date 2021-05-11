@@ -5,7 +5,7 @@
 </a>
 </p>
 <p align="center">
-<a href='https://mrlei.cn1.utools.club/quartz-lite/login.html'>
+<a href='https://quartz-lite.cn.utools.club/quartz-lite/login.html'>
     <img alt="Fork me on Gitee" src="https://leigq-blog.oss-cn-shenzhen.aliyuncs.com/gitee/logo.png">
 </a>
 </p>
@@ -228,7 +228,7 @@
 
 ## 演示地址
 
-<https://quartz-lite.cn.utools.club>
+[https://quartz-lite.cn.utools.club](https://quartz-lite.cn.utools.club/quartz-lite/login.html)
 
 - 账号：admin
 - 密码：123456
