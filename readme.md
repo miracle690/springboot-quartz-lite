@@ -4,10 +4,12 @@
     <img alt="Fork me on Gitee" src="https://gitee.com/leiguoqing/springboot-quartz-lite/widgets/widget_4.svg">
 </a>
 </p>
-
 <p align="center">
-基于Quartz的可视化任务系统
+<a href='https://mrlei.cn1.utools.club/quartz-lite/login.html'>
+    <img alt="Fork me on Gitee" src="https://leigq-blog.oss-cn-shenzhen.aliyuncs.com/gitee/logo.png">
+</a>
 </p>
+
 
 <p align="center">
 <a href='https://gitee.com/leiguoqing/quartz-lite-starter'>starter版本</a>已上线，欢迎使用！
@@ -226,7 +228,7 @@
 
 ## 演示地址
 
-<http://quartz-lite.leiguoqing.xyz/>
+<https://mrlei.cn1.utools.club/quartz-lite/login.html>
 
 - 账号：admin
 - 密码：123456
